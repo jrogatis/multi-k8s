@@ -9,8 +9,27 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: 'true'
     # UPDATE THIS LINE ABOVE
 spec:
+   tls:
+    - hosts:
+        - metaconexao.com.br
+        - www.metaconexao.com.br
+      secretName: metaconexao-com-br
   rules:
-    - http:
+    - host: metaconexao.com.br
+      http:
+        paths:
+          - path: /?(.*)
+            # UPDATE THIS LINE ABOVE
+            backend:
+              serviceName: client-cluster-ip-service
+              servicePort: 3000
+          - path: /api/?(.*)
+            # UPDATE THIS LINE ABOVE
+            backend:
+              serviceName: server-cluster-ip-service
+              servicePort: 5000
+    - host: www.metaconexao.com.br
+      http:
         paths:
           - path: /?(.*)
             # UPDATE THIS LINE ABOVE
