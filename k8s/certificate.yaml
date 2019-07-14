@@ -1,0 +1,20 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: metaconexao-com-br-tls
+spec:
+  secretName: metaconexao-com-br
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: metaconexao.com.br
+  dnsNames:
+    - metaconexao.com.br
+    - www.metaconexao.com.br
+  acme:
+    config:
+      - http01:
+          ingressClass: nginx
+        domains:
+          - metaconexao.com.br
+          - www.metaconexao.com.br
